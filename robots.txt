@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://dangdh1996.github.io/revision-ledger-app/sitemap.xml
