@@ -45,4 +45,4 @@ Live browser smoke-tested 31 Oct 2026:
 - 10-Ball: 3/10 ghost racks = 30% win rate; 4/10 breaks = 40%; persisted after reload.
 - No JS console errors observed during smoke test.
 
-Contact: doihaidang@gmail.com
+Feedback: https://github.com/dangdh1996/revision-ledger-app/issues
