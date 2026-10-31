@@ -1,0 +1,36 @@
+name: Site health & syntax checks
+on:
+  push:
+    branches: [main]
+  schedule:
+    - cron: "15 3 * * *"
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683
+        with:
+          persist-credentials: false
+      - name: Validate JavaScript
+        run: |
+          node --check revision-ledger/app.js
+          node --check ten-ball/app.js
+      - name: Validate pages and assets in repo
+        run: |
+          test -s index.html
+          test -s assets/style.css
+          test -s revision-ledger/index.html
+          test -s ten-ball/index.html
+          test -s privacy.html
+      - name: Check published website
+        run: |
+          set -eu
+          root="https://dangdh1996.github.io/revision-ledger-app"
+          for url in "$root/index.html" "$root/revision-ledger/index.html" "$root/ten-ball/index.html" "$root/assets/style.css" "$root/privacy.html"; do
+            echo "Checking $url"
+            curl --location --fail --silent --show-error --retry 3 --retry-delay 4 --max-time 25 --output /dev/null "$url"
+          done
